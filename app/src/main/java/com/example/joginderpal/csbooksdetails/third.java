@@ -95,15 +95,23 @@ public class third extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Picasso.with(third.this).load("http://it-ebooks.info"+li.get(0)).fit().into(im);
+            if (!li.isEmpty()) {
+                Picasso.with(third.this).load("http://it-ebooks.info" + li.get(0)).fit().into(im);
 
-            tx.setText(text);
-            tx1.setText(text1);
-            tx2.setText(text2);
-            tx3.setText(text3);
-            tx4.setText(text4);
-           // Glide.with(third.this).load("http://it-ebooks.info"+li.get(0)).into(im);
+                tx.setText(text);
+                tx1.setText(text1);
+                tx2.setText(text2);
+                tx3.setText(text3);
+                tx4.setText(text4);
+                // Glide.with(third.this).load("http://it-ebooks.info"+li.get(0)).into(im);
 
+            }
+            else{
+
+
+
+
+            }
         }
     }
 
