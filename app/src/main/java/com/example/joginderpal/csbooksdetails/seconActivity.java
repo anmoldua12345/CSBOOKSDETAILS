@@ -57,6 +57,7 @@ public class seconActivity extends AppCompatActivity {
 
             try {
                 li=new ArrayList<>();
+                li1=new ArrayList<>();
                 String sear=getIntent().getExtras().getString("search");
                 Document doc= Jsoup.connect("http://it-ebooks.info/search/?q="+sear).get();
                 Elements ele=doc.getElementsByTag("table");
@@ -70,6 +71,8 @@ public class seconActivity extends AppCompatActivity {
 
                             String src=tr1.getElementsByTag("img").first().attr("src");
                             li.add(src);
+                            String href=tr1.getElementsByTag("a").first().attr("href");
+                            li1.add(href);
 
                         }
 
@@ -93,7 +96,7 @@ public class seconActivity extends AppCompatActivity {
             pd.dismiss();
             layoutManager = new GridLayoutManager(seconActivity.this,2);
             recyclerView.setLayoutManager(layoutManager);
-            adapter = new RecyclerAdapter(li,seconActivity.this);
+            adapter = new RecyclerAdapter(li,li1,seconActivity.this);
             recyclerView.setAdapter(adapter);
      //       ed2.setText(li.get(0));
         }

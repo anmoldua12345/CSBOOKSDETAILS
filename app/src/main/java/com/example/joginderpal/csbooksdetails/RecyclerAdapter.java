@@ -20,13 +20,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
     List<String> li;
+    List<String> li1;
     Context ctx;
 
 
-    public RecyclerAdapter(List<String> li,Context ctx) {
+    public RecyclerAdapter(List<String> li, List<String> li1, Context ctx) {
 
         this.li=li;
         this.ctx=ctx;
+        this.li1=li1;
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -40,9 +43,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     int position=getAdapterPosition();
-                 //   Intent i=new Intent(ctx,second.class);
-                 //   i.putExtra("link",li1.get(position));
-                 //   ctx.startActivity(i);
+                    Intent i=new Intent(ctx,third.class);
+                    i.putExtra("image",li.get(position));
+                    i.putExtra("link",li1.get(position));
+                      ctx.startActivity(i);
 
                 }
             });
