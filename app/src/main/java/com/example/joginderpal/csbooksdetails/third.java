@@ -3,7 +3,12 @@ package com.example.joginderpal.csbooksdetails;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +29,7 @@ import java.util.List;
 public class third extends Activity {
 
     ImageView im;
+    RelativeLayout bottom_rl,books_rl;
     List<String> li;
     List<String> li1;
     TextView tx,tx1,tx2,tx3,tx4;
@@ -32,12 +38,22 @@ public class third extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.third);
+        bottom_rl= (RelativeLayout) findViewById(R.id.bottom_rl);
+        books_rl= (RelativeLayout) findViewById(R.id.book_rl);
         im= (ImageView) findViewById(R.id.image_books_third);
         tx= (TextView) findViewById(R.id.description);
         tx1= (TextView) findViewById(R.id.publisher);
         tx2= (TextView) findViewById(R.id.By);
         tx3= (TextView) findViewById(R.id.Year);
         tx4= (TextView) findViewById(R.id.Pages);
+
+        TranslateAnimation translateAnimation=new TranslateAnimation(0,0,500,0);
+        translateAnimation.setDuration(500);
+        bottom_rl.startAnimation(translateAnimation);
+
+        Animation anim=new AlphaAnimation(0,1);
+        anim.setDuration(500);
+        books_rl.startAnimation(anim);
          new doit().execute();
     }
 

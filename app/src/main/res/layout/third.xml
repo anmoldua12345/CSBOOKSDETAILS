@@ -52,6 +52,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/book_rl"
         android:background="#A3DCDE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
