@@ -41,10 +41,13 @@ public class seconActivity extends AppCompatActivity {
         recyclerView= (RecyclerView) findViewById(R.id.rvactivity_main);
         recyclerView1= (RecyclerView) findViewById(R.id.rvdactivity_main);
 
+        li=new ArrayList<>();
+        li1=new ArrayList<>();
+
+
         if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT){
             layoutManager = new GridLayoutManager(seconActivity.this, 2);
             recyclerView.setLayoutManager(layoutManager);
-
 
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -70,12 +73,41 @@ public class seconActivity extends AppCompatActivity {
             });
 
 
-
         }
         else if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
             layoutManager = new GridLayoutManager(seconActivity.this, 3);
+
             recyclerView1.setLayoutManager(layoutManager);
+
+            recyclerView1.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                    if (dy>0){
+
+                        visibleCount=layoutManager.getChildCount();
+                        totalCount=layoutManager.getItemCount();
+                        pastCount=layoutManager.findFirstCompletelyVisibleItemPosition();
+                        if (loading){
+                            if ((visibleCount+pastCount)>totalCount){
+                                loading=false;
+                                new doit1().execute();
+
+                            }
+                        }
+
+                    }
+
+
+                }
+            });
+
+
+
         }
+
+
+
 
         new doit().execute();
     }
@@ -99,10 +131,8 @@ public class seconActivity extends AppCompatActivity {
 
 
             try {
-                li=new ArrayList<>();
-                li1=new ArrayList<>();
                 String sear=getIntent().getExtras().getString("search");
-                Document doc= Jsoup.connect("http://it-ebooks.info/search/?q="+sear+"&page="+pageCount).get();
+                Document doc= Jsoup.connect("http://it-ebooks.info/search/?q="+sear+"&type=title"+"&page="+pageCount).get();
                 Elements ele=doc.getElementsByTag("table");
                 for (Element el1:ele){
 
@@ -172,10 +202,9 @@ public class seconActivity extends AppCompatActivity {
 
             try {
 
-                li=new ArrayList<>();
-                li1=new ArrayList<>();
+
                 String sear=getIntent().getExtras().getString("search");
-                Document doc= Jsoup.connect("http://it-ebooks.info/search/?q="+sear+"&page="+pageCount).get();
+                Document doc= Jsoup.connect("http://it-ebooks.info/search/?q="+sear+"&type=title"+"&page="+pageCount).get();
                 Elements ele=doc.getElementsByTag("table");
                 for (Element el1:ele){
 
@@ -212,14 +241,14 @@ public class seconActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             pd.dismiss();
-          //  adapter = new RecyclerAdapter(li, li1, seconActivity.this);
-            if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT) {
+            // adapter = new RecyclerAdapter(li, li1, seconActivity.this);
+
                // adapter = new RecyclerAdapter(li, li1, seconActivity.this);
                 adapter.notifyDataSetChanged();
-               // recyclerView.setAdapter(adapter);
+              //  recyclerView.setAdapter(adapter);
                 loading=true;
             }
-        }
+
 
     }
 
