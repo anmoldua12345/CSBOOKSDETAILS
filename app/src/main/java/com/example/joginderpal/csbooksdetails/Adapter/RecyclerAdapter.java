@@ -43,7 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     int position=getAdapterPosition();
-                    Intent i=new Intent(ctx,third.class);
+                    Intent i=new Intent(ctx, com.example.joginderpal.csbooksdetails.third.class);
                     i.putExtra("image",li.get(position));
                     i.putExtra("link",li1.get(position));
                       ctx.startActivity(i);

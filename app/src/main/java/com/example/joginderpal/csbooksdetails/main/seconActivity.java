@@ -169,11 +169,11 @@ public class seconActivity extends AppCompatActivity {
             pd.dismiss();
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT) {
 
-                adapter = new RecyclerAdapter(li, li1, seconActivity.this);
+                adapter = new com.example.joginderpal.csbooksdetails.RecyclerAdapter(li, li1, seconActivity.this);
                 recyclerView.setAdapter(adapter);
             }
             else if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
-                adapter = new RecyclerAdapter(li, li1, seconActivity.this);
+                adapter = new com.example.joginderpal.csbooksdetails.RecyclerAdapter(li, li1, seconActivity.this);
                 recyclerView1.setAdapter(adapter);
                 recyclerView1.addItemDecoration(new recyclerItem(30));
 
@@ -241,11 +241,7 @@ public class seconActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             pd.dismiss();
-            // adapter = new RecyclerAdapter(li, li1, seconActivity.this);
-
-               // adapter = new RecyclerAdapter(li, li1, seconActivity.this);
                 adapter.notifyDataSetChanged();
-              //  recyclerView.setAdapter(adapter);
                 loading=true;
             }
 

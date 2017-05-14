@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i=new Intent(MainActivity.this,seconActivity.class);
+                Intent i=new Intent(MainActivity.this, com.example.joginderpal.csbooksdetails.seconActivity.class);
                 i.putExtra("search",ed2.getText().toString());
                 startActivity(i);
 
