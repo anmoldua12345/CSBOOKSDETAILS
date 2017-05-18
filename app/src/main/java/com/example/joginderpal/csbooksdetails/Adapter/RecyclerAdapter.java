@@ -1,7 +1,11 @@
 package com.example.joginderpal.csbooksdetails;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,13 +44,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
           image= (ImageView) itemView.findViewById(R.id.image_books);
             itemView.setOnClickListener(new View.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View view) {
                     int position=getAdapterPosition();
                     Intent i=new Intent(ctx, com.example.joginderpal.csbooksdetails.third.class);
                     i.putExtra("image",li.get(position));
                     i.putExtra("link",li1.get(position));
-                      ctx.startActivity(i);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) ctx,image,"Books_photo");
+                    ctx.startActivity(i,options.toBundle());
 
                 }
             });

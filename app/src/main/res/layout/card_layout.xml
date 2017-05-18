@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/image_books"
+        android:transitionName="Books_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

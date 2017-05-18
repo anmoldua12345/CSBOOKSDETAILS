@@ -1,174 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/image_books_third"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        android:layout_width="182dp"
-        android:layout_height="302dp" />
+     <android.support.design.widget.AppBarLayout
+         android:id="@+id/app_bar_layout_third"
+         android:layout_width="match_parent"
+         android:layout_height="220dp">
 
-    <RelativeLayout
-        android:id="@+id/bottom_rl"
-        android:background="#3B484E"
-        android:layout_below="@id/image_books_third"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="#fff"
-        android:text="DESCRIPTION"
-        android:layout_centerHorizontal="true"
-        android:textSize="20dp"
-        android:typeface="serif"
-        android:textStyle="bold"/>
+         <android.support.design.widget.CollapsingToolbarLayout
+             android:id="@+id/collapsing_toolbar_layout_third"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             app:contentScrim="@color/colorPrimary"
+             app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
 
-    <ScrollView
-        android:layout_below="@id/desc"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+             <ImageView
+                 android:id="@+id/image_books_third"
+                 android:layout_width="200dp"
+                 android:layout_height="match_parent"
+                 android:transitionName="Books_photo"
+                 android:layout_gravity="center"
+                 />
+             <android.support.v7.widget.Toolbar
+                 android:id="@+id/toolBar_third"
+                 android:layout_width="match_parent"
+                 android:layout_height="?attr/actionBarSize"
+                 app:layout_collapseMode="pin"
+                 ></android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:textColor="#fff"
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wait a moment please....."
-            />
-
-    </ScrollView>
-
-    </RelativeLayout>
+         </android.support.design.widget.CollapsingToolbarLayout>
+     </android.support.design.widget.AppBarLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/book_rl"
-        android:background="#A3DCDE"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_rl"
-        android:layout_toRightOf="@id/image_books_third">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@id/app_bar_layout_third"
+        android:scrollbars="vertical"
+        >
 
-        <TextView
-            android:layout_marginTop="30dp"
-            android:id="@+id/book_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Book Details"
-            android:textSize="30dp"
-            android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+      <TextView
+          android:id="@+id/details"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:text="Details"
+          android:textSize="40dp"
+          android:textStyle="bold"
+          android:typeface="normal"/>
 
-        <FrameLayout
-            android:id="@+id/publisher_frame"
-            android:layout_marginTop="25dp"
-            android:layout_below="@id/book_details"
+        <RelativeLayout
+            android:id="@+id/details_relative_layout"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            
 
-            <TextView
+                <TextView
+                    android:id="@+id/publisher_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Publisher : "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp"/>
+
+                <TextView
+                    android:id="@+id/publisher"
+                    android:layout_toRightOf="@id/publisher_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Wait.... "/>
+
+             <TextView
+                android:id="@+id/by_text"
+                android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Publisher : "
-                android:textStyle="bold"
-                android:textSize="15dp"
-                />
-
-            <TextView
-                android:id="@+id/publisher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wait.."
-                android:layout_gravity="right"
-                />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/by_frame"
-            android:layout_marginTop="25dp"
-            android:layout_below="@id/publisher_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="By :  "
-                android:textSize="15dp"
-                />
+                android:text="By : "
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:id="@+id/By"
+                android:layout_toRightOf="@id/by_text"
+                android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wait.."
-                android:layout_gravity="right" />
-
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:id="@+id/year_frame"
-            android:layout_marginTop="25dp"
-            android:layout_below="@id/by_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:textSize="20dp"
+                android:text="Wait.... "/>
 
             <TextView
-                android:textStyle="bold"
+                android:id="@+id/year_text"
+                android:layout_marginTop="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Year :  "
-                android:textSize="15dp"
-                />
+                android:text="Year :    "
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:id="@+id/Year"
+                android:layout_toRightOf="@id/year_text"
+                android:layout_marginTop="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HELLO"
-                android:layout_gravity="right"
-                android:layout_marginRight="50dp"/>
-
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:layout_marginTop="25dp"
-            android:layout_below="@id/year_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:textSize="20dp"
+                android:text="Wait.... "/>
 
             <TextView
-                android:textStyle="bold"
+                android:id="@+id/pages_text"
+                android:layout_marginTop="150dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pages : "
-                android:textSize="15dp"
-                />
+                android:text="Pages :    "
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:id="@+id/Pages"
+                android:layout_toRightOf="@id/pages_text"
+                android:layout_marginTop="150dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HELLO"
-                android:layout_gravity="right"
-                android:layout_marginRight="50dp"/>
+                android:textSize="20dp"
+                android:text="Wait.... "/>
 
-        </FrameLayout>
+        </RelativeLayout>
 
-    </RelativeLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_relative_layout"
+            android:text="Description"
+            android:layout_centerHorizontal="true"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            />
+
+       <RelativeLayout
+           android:layout_marginTop="10dp"
+           android:layout_below="@id/description_text"
+           android:layout_width="match_parent"
+           android:layout_height="100dp">
+
+           <TextView
+               android:id="@+id/description"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="italic" />
+
+
+         </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
