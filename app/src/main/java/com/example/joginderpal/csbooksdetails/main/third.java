@@ -2,16 +2,23 @@ package com.example.joginderpal.csbooksdetails;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -32,6 +39,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,27 +53,61 @@ public class third extends AppCompatActivity {
     ImageView im;
     RelativeLayout bottom_rl,books_rl;
     List<String> li;
-    List<String> li1;
+    List<String> li1,relatedUrl;
     TextView tx,tx1,tx2,tx3,tx4;
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
+    View Divider;
+    ConstraintLayout constraintLayout;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+
         setContentView(R.layout.third);
-        toolbar= (Toolbar) findViewById(R.id.toolBar_third);
-        setSupportActionBar(toolbar);
-        collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_third);
-        appBarLayout= (AppBarLayout) findViewById(R.id.app_bar_layout_third);
-        im= (ImageView) findViewById(R.id.image_books_third);
+
+        constraintLayout= (ConstraintLayout) findViewById(R.id.constraint_layout_third);
         tx= (TextView) findViewById(R.id.description);
         tx1= (TextView) findViewById(R.id.publisher);
         tx2= (TextView) findViewById(R.id.By);
         tx3= (TextView) findViewById(R.id.Year);
         tx4= (TextView) findViewById(R.id.Pages);
+        Divider=findViewById(R.id.divider_third);
+        String s=getIntent().getExtras().getString("image");
+
+
+        try {
+            URL url = new URL("http://it-ebooks.info" +s);
+            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            Palette.from(image).generate(new Palette.PaletteAsyncListener() {
+                @Override
+                public void onGenerated(Palette palette) {
+
+                    toolbar.setBackgroundColor(palette.getVibrantColor(getResources().getColor(R.color.colorPrimary)));
+                    getWindow().setStatusBarColor(palette.getVibrantColor(getResources().getColor(R.color.colorPrimary)));
+                    constraintLayout.setBackgroundColor(palette.getDarkMutedColor(getResources().getColor(R.color.colorPrimary)));
+                    Divider.setBackgroundColor(Color.WHITE);
+                    tx.setTextColor(Color.WHITE);
+                    tx1.setTextColor(Color.WHITE);
+                    tx2.setTextColor(Color.WHITE);
+                    tx3.setTextColor(Color.WHITE);
+                    tx4.setTextColor(Color.WHITE);
+                }
+            });
+        } catch(IOException e) {
+            System.out.println(e);
+        }
+        toolbar= (Toolbar) findViewById(R.id.toolBar_third);
+        setSupportActionBar(toolbar);
+        collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_third);
+        appBarLayout= (AppBarLayout) findViewById(R.id.app_bar_layout_third);
+        im= (ImageView) findViewById(R.id.image_books_third);
 
         postponeEnterTransition();
 
@@ -91,7 +133,7 @@ public class third extends AppCompatActivity {
             }
         });
 
-        String s=getIntent().getExtras().getString("image");
+
 
         Picasso.with(third.this).load("http://it-ebooks.info" +s).fit().into(im,
                 new Callback() {
@@ -120,6 +162,7 @@ public class third extends AppCompatActivity {
 
 
 
+
          new doit().execute();
     }
 
@@ -141,6 +184,7 @@ public class third extends AppCompatActivity {
 
             try {
                 li=new ArrayList<>();
+                relatedUrl=new ArrayList<>();
                 li1=new ArrayList<>();
                 Document doc= Jsoup.connect("http://it-ebooks.info"+getIntent().getExtras().getString("link")).get();
                 String img=doc.getElementsByTag("img").first().attr("src");
@@ -161,10 +205,7 @@ public class third extends AppCompatActivity {
                     if (e.text().contains("Pages:")){
                         text4=e.getElementsByTag("b").first().text();
                     }
-
                 }
-
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -178,6 +219,9 @@ public class third extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (!li.isEmpty()) {
+                if (text2.length()>10){
+                    text2=text2.substring(0,10);
+                }
                 tx.setText(text);
                 tx1.setText(text1);
                 tx2.setText(text2);

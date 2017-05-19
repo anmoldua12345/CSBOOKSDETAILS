@@ -120,7 +120,6 @@ public class seconActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pageCount++;
             pd=new ProgressDialog(seconActivity.this);
             pd.setMessage("Loading..");
             pd.show();
