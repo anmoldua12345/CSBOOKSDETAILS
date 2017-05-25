@@ -1,8 +1,6 @@
 package com.example.joginderpal.csbooksdetails;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -12,16 +10,19 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.joginderpal.csbooksdetails.fragment.fragment_price;
+import com.example.joginderpal.csbooksdetails.viewPager.ViewPagerCust_wynk;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +53,12 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
  */
 public class third extends AppCompatActivity {
 
+    View view;
+    boolean loading=false;
+    ViewGroup viewGroup;
+    float yDistance;
+    float xDistance;
+
     ImageView im;
     RelativeLayout bottom_rl,books_rl;
     List<String> li;
@@ -58,8 +67,11 @@ public class third extends AppCompatActivity {
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
+    FloatingActionButton fabPrice;
     View Divider;
+    NestedScrollView nv;
     ConstraintLayout constraintLayout;
+    ViewPagerCust_wynk viewPagerCust_wynk;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -79,6 +91,9 @@ public class third extends AppCompatActivity {
         tx3= (TextView) findViewById(R.id.Year);
         tx4= (TextView) findViewById(R.id.Pages);
         Divider=findViewById(R.id.divider_third);
+        viewPagerCust_wynk= (ViewPagerCust_wynk) findViewById(R.id.ViewPager_price);
+        nv= (NestedScrollView) findViewById(R.id.nested_view);
+        nv.setFillViewport(true);
         String s=getIntent().getExtras().getString("image");
 
 
@@ -91,7 +106,7 @@ public class third extends AppCompatActivity {
 
                     toolbar.setBackgroundColor(palette.getVibrantColor(getResources().getColor(R.color.colorPrimary)));
                     getWindow().setStatusBarColor(palette.getVibrantColor(getResources().getColor(R.color.colorPrimary)));
-                    constraintLayout.setBackgroundColor(palette.getDarkMutedColor(getResources().getColor(R.color.colorPrimary)));
+                 //   constraintLayout.setBackgroundColor(palette.getDarkMutedColor(getResources().getColor(R.color.colorPrimary)));
                     Divider.setBackgroundColor(Color.WHITE);
                     tx.setTextColor(Color.WHITE);
                     tx1.setTextColor(Color.WHITE);
@@ -114,6 +129,7 @@ public class third extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 
             int scroll =-1;
+            boolean loading1=false;
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -123,10 +139,13 @@ public class third extends AppCompatActivity {
                  }
 
                  if (scroll+verticalOffset==0){
-
                      collapsingToolbarLayout.setTitle(" ");
+                     loading1=true;
                  }
                 else{
+                     if (loading1) {
+                         loading1=false;
+                     }
                      collapsingToolbarLayout.setTitle(" ");
                  }
 
@@ -155,15 +174,20 @@ public class third extends AppCompatActivity {
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
 
                 collapsingToolbarLayout.setBackground(resource);
-
+                constraintLayout.setBackground(resource);
 
             }
         });
 
 
+        MyPageAdapter myPageAdapter=new MyPageAdapter(getSupportFragmentManager());
+        for (int i=0;i<2;i++){
+            myPageAdapter.addFragment(new fragment_price(i));
+        }
+        viewPagerCust_wynk.setAdapter(myPageAdapter);
 
 
-         new doit().execute();
+        new doit().execute();
     }
 
     public class doit extends AsyncTask<Void,Void,Void>{
@@ -246,6 +270,31 @@ public class third extends AppCompatActivity {
                     }
                 });
     }
+
+
+
+    public class MyPageAdapter extends FragmentPagerAdapter {
+
+        List<Fragment> fragment_li=new ArrayList<>();
+
+        public MyPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragment_li.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragment_li.size();
+        }
+        public void addFragment(Fragment a){
+            fragment_li.add(a);
+        }
+    }
+
 
 
 }

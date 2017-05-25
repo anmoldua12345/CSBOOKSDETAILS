@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -50,37 +51,21 @@ public class firstActivity extends AppCompatActivity {
         yDistance=Math.abs(yFab-yCenter);
 
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
                 loading=true;
-                TranslateAnimation translateAnimation=new TranslateAnimation(0,-xDistance,0,-yDistance);
-                translateAnimation.setDuration(200);
                 LayoutInflater li= (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view=li.inflate(R.layout.category_main,null);
                 viewGroup= (ViewGroup) findViewById(R.id.first_relative_main);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 params.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.CENTER_IN_PARENT);
                 viewGroup.addView(view,0,params);
-                view.setAlpha(0);
-                new Handler().postDelayed(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void run() {
-
-                        view.setAlpha(1);
-                        fab.setVisibility(View.GONE);
-                        final Animator anim= ViewAnimationUtils.createCircularReveal(view,(int)xDistance,(int)yDistance,0,Math.max(view.getWidth(),view.getHeight()));
-                        anim.setDuration(300);
-                        anim.start();
-
-                    }
-                },200);
-
-                fab.startAnimation(translateAnimation);
-
-
-
+                  fab.setVisibility(View.GONE);
+                final Animator anim= ViewAnimationUtils.createCircularReveal(view,(int)fab.getX(),(int)fab.getY(),0,Math.max(view.getWidth(),view.getHeight()));
+                anim.setDuration(300);
+                anim.start();
 
             }
         });

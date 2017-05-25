@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/coordinate_third"
     android:layout_height="match_parent">
 
      <android.support.design.widget.AppBarLayout
          android:id="@+id/app_bar_layout_third"
          android:layout_width="match_parent"
-         android:layout_height="220dp">
+         android:layout_height="300dp">
 
          <android.support.design.widget.CollapsingToolbarLayout
              android:id="@+id/collapsing_toolbar_layout_third"
@@ -24,13 +25,15 @@
                  android:layout_width="match_parent"
                  android:layout_height="?attr/actionBarSize"
                  app:layout_collapseMode="parallax"
-                 ></android.support.v7.widget.Toolbar>
+                 >
+             </android.support.v7.widget.Toolbar>
 
              <ImageView
                  android:id="@+id/image_books_third"
                  android:layout_width="200dp"
-                 android:layout_height="match_parent"
+                 android:layout_height="220dp"
                  android:layout_gravity="center"
+                 android:scaleType="centerCrop"
                  android:transitionName="Books_photo" />
 
          </android.support.design.widget.CollapsingToolbarLayout>
@@ -40,12 +43,41 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/nested_view"
         android:layout_below="@id/app_bar_layout_third"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <include layout="@layout/third_second"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/one_ly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <include layout="@layout/third_second" />
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="220dp"
+            android:layout_below="@id/one_ly">
+
+            <com.example.joginderpal.csbooksdetails.viewPager.ViewPagerCust_wynk
+                android:id="@+id/ViewPager_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.example.joginderpal.csbooksdetails.viewPager.ViewPagerCust_wynk>
+
+         </RelativeLayout>
+
+        </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+
 </android.support.design.widget.CoordinatorLayout>
