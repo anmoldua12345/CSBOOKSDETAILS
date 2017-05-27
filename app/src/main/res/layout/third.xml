@@ -64,14 +64,10 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="220dp"
+            android:layout_height="400dp"
             android:layout_below="@id/one_ly">
 
-            <com.example.joginderpal.csbooksdetails.viewPager.ViewPagerCust_wynk
-                android:id="@+id/ViewPager_price"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </com.example.joginderpal.csbooksdetails.viewPager.ViewPagerCust_wynk>
+          <include layout="@layout/price_layout"/>
 
          </RelativeLayout>
 
